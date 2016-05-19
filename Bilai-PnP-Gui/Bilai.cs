@@ -1,4 +1,14 @@
-﻿using System.Net;
+﻿/**
+    Bilai-PnP-Gui, Desktop stat viewer for Banglalion devices
+    Copyright (C) 2016 Md. Minhazul Haque
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 3
+    of the License, or (at your option) any later version.
+*/
+
+using System.Net;
 using System.Text;
 using System.IO;
 

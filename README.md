@@ -1,12 +1,20 @@
 # Bilai PnP Gui
 
-Forget web based client panel for Bilai (Banglalion) devices.
+Forget web based control panel for Bilai (Banglalion) devices.
+
+```
+This is a fun project. I have no affiliation/contract with Banglalion Communications Ltd. Use at your own risk.
+```
+
+This app logs in to web based control panel using HttpRequest, fetches device status data, parses them and shows as desktop application.
 
 ## Downloads
 
 * Windows [Link](link)
 * Linux [TODO](link)
 * MacOSX [TODO](link)
+
+## Screenshots
 
 ![Bilai-PnP-Gui](Bilai-PnP-Gui.png)
 
