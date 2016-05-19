@@ -10,7 +10,7 @@ This app logs in to web based control panel using HttpRequest, fetches device st
 
 ## Downloads
 
-* Windows [Link](link)
+* [Windows](https://github.com/minhazul-haque/Bilai-PnP-Gui/releases/download/1.0.0/Windows-Bilai-PnP-Gui.exe)
 * Linux [TODO](link)
 * MacOSX [TODO](link)
 
