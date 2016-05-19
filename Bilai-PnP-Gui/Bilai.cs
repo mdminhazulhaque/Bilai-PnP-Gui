@@ -21,7 +21,7 @@ namespace Bilai_PnP_Gui
         const string PostDataLogin = "submit_button=login&submit_type=do_login&change_action=gozila_cgi&username=admin&passwd=admin";
         const string PostDataStatus = "submit_button=wimaxinterfaceInfo&submit_type=ref&change_action=gozila_cgi";
 
-        public string Cookie { get; private set; }
+        private string Cookie;
         public string BSID { get; private set; }
         public string Freq { get; private set; }
         public string CINR { get; private set; }
