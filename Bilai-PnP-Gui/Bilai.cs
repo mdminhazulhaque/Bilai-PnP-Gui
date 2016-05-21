@@ -11,6 +11,8 @@
 using System.Net;
 using System.Text;
 using System.IO;
+using System;
+using System.Windows.Forms;
 
 namespace Bilai_PnP_Gui
 {
@@ -31,87 +33,102 @@ namespace Bilai_PnP_Gui
         public string Uptime { get; private set; }
         public int    Signal { get; private set; }
 
-        public bool Login()
+        public String Login()
         {
-            var request = (HttpWebRequest)WebRequest.Create(BilaiURL);
-            var data = Encoding.ASCII.GetBytes(PostDataLogin);
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(BilaiURL);
+                var data = Encoding.ASCII.GetBytes(PostDataLogin);
 
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = data.Length;
 
-            var stream = request.GetRequestStream();
-            stream.Write(data, 0, data.Length);
-            stream.Close();
+                var stream = request.GetRequestStream();
+                stream.Write(data, 0, data.Length);
+                stream.Close();
 
-            var response = (HttpWebResponse)request.GetResponse();
+                var response = (HttpWebResponse)request.GetResponse();
 
-            Cookie = response.GetResponseHeader("Set-Cookie").Replace("; Path=/", "");
+                Cookie = response.GetResponseHeader("Set-Cookie").Replace("; Path=/", "");
 
-            stream = response.GetResponseStream();
-            var reader = new StreamReader(stream);
-            string responseFromServer = reader.ReadToEnd();
+                stream = response.GetResponseStream();
+                var reader = new StreamReader(stream);
+                string responseFromServer = reader.ReadToEnd();
 
-            reader.Close();
-            stream.Close();
-            response.Close();
+                reader.Close();
+                stream.Close();
+                response.Close();
 
-            if (responseFromServer == "success")
-                return true;
-            else
-                return false;
+                if (responseFromServer == "success")
+                    return "";
+                else
+                    return "Login Failed";
+            }
+            catch(Exception exc)
+            {
+                return exc.Message;
+            }
         }
 
-        public void Update()
+        public String Update()
         {
-            var request = (HttpWebRequest)WebRequest.Create(BilaiURL);
-            var data = Encoding.ASCII.GetBytes(PostDataStatus);
+            try
+            { 
+                var request = (HttpWebRequest)WebRequest.Create(BilaiURL);
+                var data = Encoding.ASCII.GetBytes(PostDataStatus);
 
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = data.Length;
 
-            var stream = request.GetRequestStream();
-            stream.Write(data, 0, data.Length);
-            stream.Close();
+                var stream = request.GetRequestStream();
+                stream.Write(data, 0, data.Length);
+                stream.Close();
 
-            var response = (HttpWebResponse)request.GetResponse();
+                var response = (HttpWebResponse)request.GetResponse();
 
-            Cookie = response.GetResponseHeader("Cookie").Replace("; Path=/", "");
+                Cookie = response.GetResponseHeader("Cookie").Replace("; Path=/", "");
 
-            stream = response.GetResponseStream();
-            var reader = new StreamReader(stream);
-            string[] StatusData = reader.ReadToEnd().Split(';');
+                stream = response.GetResponseStream();
+                var reader = new StreamReader(stream);
+                string[] StatusData = reader.ReadToEnd().Split(';');
 
-            BSID = StatusData[1];
-            Freq = StatusData[2];
-            CINR = StatusData[4];
-            RSSI = StatusData[3];
-            ULRate = StatusData[20];
-            DLRate = StatusData[21];
-            Uptime = StatusData[19];
+                BSID = StatusData[1];
+                Freq = StatusData[2];
+                CINR = StatusData[4];
+                RSSI = StatusData[3];
+                ULRate = StatusData[20];
+                DLRate = StatusData[21];
+                Uptime = StatusData[19];
 
-            double nRSSI = System.Convert.ToSingle(RSSI.Replace(" dBm", ""));
-            nRSSI = (nRSSI + 100F) * 1.33;
+                double nRSSI = System.Convert.ToSingle(RSSI.Replace(" dBm", ""));
+                nRSSI = (nRSSI + 100F) * 1.33;
 
-            if (nRSSI >= 80)
-                Signal = 5;
-            else if (nRSSI >= 60)
-                Signal = 4;
-            else if(nRSSI >= 40)
-                Signal = 3;
-            else if (nRSSI >= 20)
-                Signal = 2;
-            else if(nRSSI >= 10)
-                Signal = 1;
-            else
-                Signal = 0;
+                if (nRSSI >= 80)
+                    Signal = 5;
+                else if (nRSSI >= 60)
+                    Signal = 4;
+                else if(nRSSI >= 40)
+                    Signal = 3;
+                else if (nRSSI >= 20)
+                    Signal = 2;
+                else if(nRSSI >= 10)
+                    Signal = 1;
+                else
+                    Signal = 0;
 
-            Uptime = Uptime.Split(':')[0] + "h " + Uptime.Replace(" ", "").Split(':')[1] + "m";
+                Uptime = Uptime.Split(':')[0] + "h " + Uptime.Replace(" ", "").Split(':')[1] + "m";
 
-            reader.Close();
-            stream.Close();
-            response.Close();
+                reader.Close();
+                stream.Close();
+                response.Close();
+            }
+            catch (Exception exc)
+            {
+                return exc.Message;
+            }
+            return "";
         }
     }
 }
