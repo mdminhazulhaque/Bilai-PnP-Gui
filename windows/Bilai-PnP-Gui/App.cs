@@ -10,22 +10,22 @@
 
 using System.Windows.Forms;
 using System.Net.NetworkInformation;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using System;
 
 namespace Bilai_PnP_Gui
 {
     public partial class App : Form
     {
         private Bilai _bilai;
-        private List<System.Windows.Forms.Label> _labels;
+        private List<Label> _labels;
 
         public App()
         {
             try
             {
-                PingReply PingReply = new Ping().Send("192.168.2.1", 1000);
+                bool pingable = false;
+                PingReply PingReply = new Ping().Send("192.168.2.1", 500);
+                pingable = PingReply.Status == IPStatus.Success;
             }
             catch (PingException e)
             {
@@ -53,25 +53,25 @@ namespace Bilai_PnP_Gui
             var labels = new List<string> {
                 "Uptime", "BSID", "Frequency", "CINR", "RSSI", "DL Rate", "UL Rate"
             };
-            
+
             for (int i = 0; i < labels.Count; i++)
             {
-                var label = new System.Windows.Forms.Label();
+                var label = new Label();
                 label.Text = labels[i];
                 //label.Anchor = AnchorStyles.
                 label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
-                this.Table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F / labels.Count));
+                this.Table.RowStyles.Add(new RowStyle(SizeType.Percent, 100F / labels.Count));
                 this.Table.Controls.Add(label, 0, i);
             }
             //
             // Dynamic Lables
             //
-            _labels = new List<System.Windows.Forms.Label>();
+            _labels = new List<Label>();
 
             for (int i = 0; i < labels.Count; i++)
             {
-                var label = new System.Windows.Forms.Label();
+                var label = new Label();
                 label.Text = "...";
                 label.Dock = System.Windows.Forms.DockStyle.Fill;
                 label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -90,7 +90,7 @@ namespace Bilai_PnP_Gui
         }
 
 
-         enum StatusCode : int
+        enum StatusCode : int
         {
             LoginError = 0,
             LoginSuccess,
@@ -104,8 +104,8 @@ namespace Bilai_PnP_Gui
             while (true)
             {
                 _backworker.ReportProgress((int)StatusCode.ShowInfo, "Attempting to login to server...");
-                String errMsg = _bilai.Login();
-                StatusCode sc = String.IsNullOrEmpty(errMsg) ? StatusCode.LoginSuccess : StatusCode.LoginError;
+                string errMsg = _bilai.Login();
+                StatusCode sc = string.IsNullOrEmpty(errMsg) ? StatusCode.LoginSuccess : StatusCode.LoginError;
                 _backworker.ReportProgress((int)sc, errMsg);
                 System.Threading.Thread.Sleep(2000);
                 if (sc == StatusCode.LoginSuccess)
@@ -116,9 +116,9 @@ namespace Bilai_PnP_Gui
 
             while (true)
             {
-                _backworker.ReportProgress((int)StatusCode.ShowInfo, "Fetching data from server...");
-                String errMsg = _bilai.Update();
-                StatusCode sc = String.IsNullOrEmpty(errMsg) ? StatusCode.UpdateSuccess : StatusCode.UpdateError;
+                //_backworker.ReportProgress((int)StatusCode.ShowInfo, "Fetching data from server...");
+                string errMsg = _bilai.Update();
+                StatusCode sc = string.IsNullOrEmpty(errMsg) ? StatusCode.UpdateSuccess : StatusCode.UpdateError;
                 _backworker.ReportProgress((int)sc, errMsg);
                 System.Threading.Thread.Sleep(2000);
             }
@@ -131,13 +131,13 @@ namespace Bilai_PnP_Gui
             switch (code)
             {
                 case StatusCode.ShowInfo:
-                    ToolStripStatusLabel.Text =  e.UserState.ToString();
+                    ToolStripStatusLabel.Text = e.UserState.ToString();
                     break;
                 case StatusCode.LoginError:
                     ToolStripStatusLabel.Text = "Login Error: " + e.UserState.ToString();
                     break;
                 case StatusCode.LoginSuccess:
-                    ToolStripStatusLabel.Text = "Login Success: Connected" ;
+                    ToolStripStatusLabel.Text = "Login Success: Connected";
                     break;
                 case StatusCode.UpdateError:
                     ToolStripStatusLabel.Text = "Update Error: " + e.UserState.ToString();
@@ -181,17 +181,17 @@ namespace Bilai_PnP_Gui
             }
         }
 
-        private void showAbout(object sender, System.EventArgs e)
-        {
-            MessageBox.Show(
-                "Developed by\n"+
-                "Md. Minhazul Haque\n"+
-                "Web: https://minhazulhaque.com\n"+
-                "Mail: minhaz@linux.com",
-                "About Bilai PnP Gui",
-                MessageBoxButtons.OK);
-        }
+        //private void showAbout(object sender, System.EventArgs e)
+        //{
+        //    MessageBox.Show(
+        //        "Developed by\n" +
+        //        "Md. Minhazul Haque\n" +
+        //        "Web: https://minhazulhaque.com\n" +
+        //        "Mail: minhaz@linux.com",
+        //        "About Bilai PnP Gui",
+        //        MessageBoxButtons.OK);
+        //}
 
-        
+
     }
 }

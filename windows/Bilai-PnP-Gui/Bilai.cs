@@ -12,7 +12,6 @@ using System.Net;
 using System.Text;
 using System.IO;
 using System;
-using System.Windows.Forms;
 
 namespace Bilai_PnP_Gui
 {
@@ -31,9 +30,9 @@ namespace Bilai_PnP_Gui
         public string ULRate { get; private set; }
         public string DLRate { get; private set; }
         public string Uptime { get; private set; }
-        public int    Signal { get; private set; }
+        public int Signal { get; private set; }
 
-        public String Login()
+        public string Login()
         {
             try
             {
@@ -65,16 +64,16 @@ namespace Bilai_PnP_Gui
                 else
                     return "Login Failed";
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 return exc.Message;
             }
         }
 
-        public String Update()
+        public string Update()
         {
             try
-            { 
+            {
                 var request = (HttpWebRequest)WebRequest.Create(BilaiURL);
                 var data = Encoding.ASCII.GetBytes(PostDataStatus);
 
@@ -102,22 +101,25 @@ namespace Bilai_PnP_Gui
                 DLRate = StatusData[21];
                 Uptime = StatusData[19];
 
-                double nRSSI = System.Convert.ToSingle(RSSI.Replace(" dBm", ""));
+                double nRSSI = Convert.ToSingle(RSSI.Replace(" dBm", ""));
+                
+                // Calculate signal quality from RSSI
                 nRSSI = (nRSSI + 100F) * 1.33;
 
                 if (nRSSI >= 80)
                     Signal = 5;
                 else if (nRSSI >= 60)
                     Signal = 4;
-                else if(nRSSI >= 40)
+                else if (nRSSI >= 40)
                     Signal = 3;
                 else if (nRSSI >= 20)
                     Signal = 2;
-                else if(nRSSI >= 10)
+                else if (nRSSI >= 10)
                     Signal = 1;
                 else
                     Signal = 0;
 
+                // Convert 12:34 to 12h 34m format
                 Uptime = Uptime.Split(':')[0] + "h " + Uptime.Replace(" ", "").Split(':')[1] + "m";
 
                 reader.Close();

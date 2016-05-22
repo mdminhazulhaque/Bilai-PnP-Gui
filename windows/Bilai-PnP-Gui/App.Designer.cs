@@ -27,6 +27,7 @@ namespace Bilai_PnP_Gui
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(App));
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolStripAboutLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -44,24 +45,24 @@ namespace Bilai_PnP_Gui
             this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripStatusLabel,
             this.ToolStripAboutLabel});
-            this.StatusStrip.Location = new System.Drawing.Point(0, 177);
+            this.StatusStrip.Location = new System.Drawing.Point(0, 219);
             this.StatusStrip.Name = "StatusStrip";
-            this.StatusStrip.Size = new System.Drawing.Size(764, 30);
+            this.StatusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
+            this.StatusStrip.Size = new System.Drawing.Size(444, 22);
             this.StatusStrip.TabIndex = 1;
             // 
             // ToolStripStatusLabel
             // 
             this.ToolStripStatusLabel.Name = "ToolStripStatusLabel";
-            this.ToolStripStatusLabel.Size = new System.Drawing.Size(564, 25);
+            this.ToolStripStatusLabel.Size = new System.Drawing.Size(313, 17);
             this.ToolStripStatusLabel.Spring = true;
             this.ToolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ToolStripAboutLabel
             // 
             this.ToolStripAboutLabel.Name = "ToolStripAboutLabel";
-            this.ToolStripAboutLabel.Size = new System.Drawing.Size(185, 25);
+            this.ToolStripAboutLabel.Size = new System.Drawing.Size(121, 17);
             this.ToolStripAboutLabel.Text = "Developed by Minhaz";
-            this.ToolStripAboutLabel.Click += new System.EventHandler(this.showAbout);
             // 
             // _backworker
             // 
@@ -79,6 +80,7 @@ namespace Bilai_PnP_Gui
             this.Table.Controls.Add(this.Signal, 2, 0);
             this.Table.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Table.Location = new System.Drawing.Point(0, 0);
+            this.Table.Margin = new System.Windows.Forms.Padding(2);
             this.Table.Name = "Table";
             this.Table.RowCount = 7;
             this.Table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
@@ -88,44 +90,46 @@ namespace Bilai_PnP_Gui
             this.Table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.Table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.Table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.Table.Size = new System.Drawing.Size(764, 177);
+            this.Table.Size = new System.Drawing.Size(444, 219);
             this.Table.TabIndex = 0;
             // 
             // Signal
             // 
             this.Signal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Signal.Image = global::Bilai_PnP_Gui.Properties.Resources.signal_0;
-            this.Signal.Location = new System.Drawing.Point(422, 3);
+            this.Signal.Location = new System.Drawing.Point(245, 2);
+            this.Signal.Margin = new System.Windows.Forms.Padding(2);
             this.Signal.Name = "Signal";
             this.Table.SetRowSpan(this.Signal, 7);
-            this.Signal.Size = new System.Drawing.Size(339, 171);
-            this.Signal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Signal.Size = new System.Drawing.Size(197, 215);
+            this.Signal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.Signal.TabIndex = 0;
             this.Signal.TabStop = false;
             // 
             // App
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(764, 207);
+            this.ClientSize = new System.Drawing.Size(444, 241);
             this.Controls.Add(this.Table);
             this.Controls.Add(this.StatusStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "App";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bilai PnP Gui";
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
             this.Table.ResumeLayout(false);
-            this.Table.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Signal)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
-        
+
 
         private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel;
-        private System.Windows.Forms.ToolStripStatusLabel ToolStripAboutLabel;
 
         public const int LabelUptime = 0;
         public const int LabelBSID = 1;
@@ -137,6 +141,7 @@ namespace Bilai_PnP_Gui
         private System.ComponentModel.BackgroundWorker _backworker;
         private System.Windows.Forms.PictureBox Signal;
         private System.Windows.Forms.TableLayoutPanel Table;
+        private System.Windows.Forms.ToolStripStatusLabel ToolStripAboutLabel;
     }
 }
 
