@@ -18,6 +18,9 @@ namespace Bilai_PnP_Gui
     public class Bilai
     {
         const string BilaiURL = "http://192.168.2.1/apply.cgi";
+        
+        const string BilaiUpdateURL = "http://192.168.2.1/Status_Router.live.asp";
+        //const string BilaiUpdateURL = "http://192.168.2.1/wimax/InterfaceInfo_Ref.asp";
 
         const string PostDataLogin = "submit_button=login&submit_type=do_login&change_action=gozila_cgi&username=admin&passwd=admin";
         const string PostDataStatus = "submit_button=wimaxinterfaceInfo&submit_type=ref&change_action=gozila_cgi";
@@ -74,10 +77,14 @@ namespace Bilai_PnP_Gui
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create(BilaiURL);
+                //var request = (HttpWebRequest)WebRequest.Create(BilaiURL);
+                var request = (HttpWebRequest)WebRequest.Create(BilaiUpdateURL);
                 var data = Encoding.ASCII.GetBytes(PostDataStatus);
 
                 request.Method = "POST";
+                
+                //fornew modem
+                //request.Method = "GET";
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentLength = data.Length;
 
